@@ -1,10 +1,7 @@
 ---
 // src/components/Hero.astro
-// 1. We import the Image component from Astro
 import { Image } from 'astro:assets';
-
-// 2. We import your actual local image file
-// CHANGE THIS line to match your exact image name and extension (e.g., .png, .webp)
+// Make sure this matches your exact image filename in the assets folder!
 import heroBg from '../assets/hero-family.jpg'; 
 ---
 
@@ -24,11 +21,11 @@ import heroBg from '../assets/hero-family.jpg';
       </p>
       
       <div class="flex flex-col sm:flex-row gap-6 mb-16 reveal delay-200">
-        <a href="#browse" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text transition-colors duration-500 shadow-premium">
+        <a href="#consultation" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text transition-colors duration-500 shadow-premium">
           Get Consultation
         </a>
-        <a href="#consultation" class="inline-flex items-center justify-center px-10 py-4 border border-brand-text/30 text-brand-text font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text transition-colors duration-500 bg-transparent">
-          Browse Helpers
+        <a href="/directory" class="inline-flex items-center justify-center px-10 py-4 border border-brand-text/30 text-brand-text font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text transition-colors duration-500 bg-transparent">
+          Browse Profiles
         </a>
       </div>
 

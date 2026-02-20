@@ -51,10 +51,11 @@ const {
           }
         });
         
+        // Stegg Fix: Changed threshold to 0 so it triggers immediately when hitting the viewport
         const observerOptions = {
           root: null,
-          rootMargin: '0px',
-          threshold: 0.15 
+          rootMargin: '50px', // Triggers slightly before the element is on screen
+          threshold: 0 
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -67,7 +68,12 @@ const {
         }, observerOptions);
 
         document.querySelectorAll('.reveal').forEach((elem) => {
-          observer.observe(elem);
+          // Stegg Fix: Fast-path for elements already visible on initial load
+          if (elem.getBoundingClientRect().top < window.innerHeight) {
+            elem.classList.add('active');
+          } else {
+            observer.observe(elem);
+          }
         });
       });
     </script>
