@@ -4,10 +4,10 @@ import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.png';
 ---
 
-<header class="w-full absolute top-0 left-0 z-50 py-8 reveal">
-  <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+<header class="w-full absolute top-0 left-0 z-[70] py-8 reveal">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
     
-    <a href="/" class="flex items-center gap-2 group">
+    <a href="/" class="flex items-center gap-2 group relative z-[80]">
       <Image 
         src={logoImage} 
         alt="Alexis Employment Pte Ltd" 
@@ -27,8 +27,85 @@ import logoImage from '../assets/logo.png';
       </a>
     </div>
 
-    <button class="md:hidden text-brand-text">
-      <i data-lucide="menu" class="w-6 h-6"></i>
+    <button id="mobile-menu-toggle" class="md:hidden text-brand-text focus:outline-none relative w-8 h-8 z-[80]">
+      <span id="icon-menu" class="absolute inset-0 transition-opacity duration-300 opacity-100 flex items-center justify-center">
+        <i data-lucide="menu" class="w-8 h-8"></i>
+      </span>
+      <span id="icon-close" class="absolute inset-0 transition-opacity duration-300 opacity-0 flex items-center justify-center pointer-events-none">
+        <i data-lucide="x" class="w-8 h-8"></i>
+      </span>
     </button>
   </div>
 </header>
+
+<div id="mobile-menu" class="fixed inset-0 bg-brand-cream z-[60] hidden flex-col items-center justify-center gap-8 px-6 opacity-0 transition-opacity duration-300 pt-16">
+  <a href="/directory" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Browse Helpers</a>
+  <a href="/#how-it-works" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Process</a>
+  <a href="/#about" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">About</a>
+  <a href="/#consultation" class="mobile-link mt-6 inline-flex items-center justify-center px-10 py-5 bg-brand-blue text-white text-xs font-bold uppercase tracking-[0.2em] w-full max-w-xs shadow-premium">
+    Get Consultation
+  </a>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    let isMenuOpen = false;
+
+    function toggleMenu() {
+      isMenuOpen = !isMenuOpen;
+      
+      if (isMenuOpen) {
+        // Show menu overlay
+        mobileMenu.classList.remove('hidden');
+        mobileMenu.classList.add('flex');
+        
+        // Force reflow
+        void mobileMenu.offsetWidth;
+        
+        mobileMenu.classList.remove('opacity-0');
+        mobileMenu.classList.add('opacity-100');
+        
+        // Morph icons
+        iconMenu.classList.replace('opacity-100', 'opacity-0');
+        iconClose.classList.replace('opacity-0', 'opacity-100');
+        
+        // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
+      } else {
+        // Hide menu overlay
+        mobileMenu.classList.remove('opacity-100');
+        mobileMenu.classList.add('opacity-0');
+        
+        // Morph icons back
+        iconMenu.classList.replace('opacity-0', 'opacity-100');
+        iconClose.classList.replace('opacity-100', 'opacity-0');
+        
+        // Restore background scrolling
+        document.body.style.overflow = '';
+        
+        // Wait for fade out to finish before adding hidden
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('flex');
+        }, 300);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', toggleMenu);
+    }
+
+    // Auto-close menu when a link is clicked
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if(isMenuOpen) toggleMenu();
+      });
+    });
+  });
+</script>
