@@ -105,8 +105,14 @@ const displayHelpers = helpers || [];
                 </div>
               </div>
 
-              <a href={`/directory/${helper.id}`} class="w-full py-4 text-center bg-transparent border border-brand-text/30 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text hover:text-white hover:border-brand-text transition-all duration-300 mt-auto block">
-                View Dossier
+              <a 
+                href={`https://wa.me/6581522260?text=Hi%20Alexis%20Employment,%20I%20would%20like%20to%20inquire%20about%20Helper%20Ref:%20${helper.reference_code}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="w-full py-4 text-center bg-brand-blue text-white text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text transition-all duration-300 mt-auto flex items-center justify-center gap-3 shadow-premium"
+              >
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                Inquire Now
               </a>
             </div>
           ))
@@ -117,7 +123,7 @@ const displayHelpers = helpers || [];
             </div>
             <h3 class="text-xl font-serif text-brand-text mb-2 font-bold">Database Connecting</h3>
             <p class="text-brand-text/60 font-medium max-w-md mx-auto">
-              No profiles found. Waiting for secure Supabase connection...
+              No profiles found. If you are the administrator, please ensure your Supabase connection is active and the "helpers" table contains data.
             </p>
           </div>
         )}

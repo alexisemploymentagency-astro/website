@@ -3,13 +3,11 @@
 import { supabase } from '../lib/supabase';
 
 // Fetch the top 3 helpers from Supabase
-// Adjust 'helpers' to match your actual table name
 const { data: helpers, error } = await supabase
   .from('helpers')
   .select('*')
   .limit(3);
 
-// Fallback in case the DB is empty or hasn't been populated yet
 const displayHelpers = helpers || [];
 ---
 
@@ -52,15 +50,20 @@ const displayHelpers = helpers || [];
             <div class="mb-10">
               <p class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-3">Core Expertise</p>
               <div class="flex flex-wrap gap-2">
-                {/* Assuming skills is an array of strings in your DB */}
-                {helper.skills && helper.skills.map((skill: string) => (
+                {helper.skills && Array.isArray(helper.skills) && helper.skills.map((skill: string) => (
                   <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">{skill}</span>
                 ))}
               </div>
             </div>
 
-            <a href={`/directory/${helper.id}`} class="w-full py-4 text-center bg-transparent border border-brand-text/30 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text hover:text-white hover:border-brand-text transition-all duration-300 mt-auto block">
-              View Dossier
+            <a 
+              href={`https://wa.me/6581522260?text=Hi%20Alexis%20Employment,%20I%20would%20like%20to%20inquire%20about%20Helper%20Ref:%20${helper.reference_code}`} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="w-full py-4 text-center bg-brand-blue text-white text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text transition-all duration-300 mt-auto flex items-center justify-center gap-3 shadow-premium"
+            >
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              Inquire Now
             </a>
           </div>
         ))
@@ -73,7 +76,7 @@ const displayHelpers = helpers || [];
     </div>
 
     <div class="text-center reveal delay-300">
-      <a href="/directory" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text transition-colors duration-500 shadow-premium group">
+      <a href="/directory" class="inline-flex items-center justify-center px-10 py-4 bg-transparent border border-brand-text text-brand-text font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text hover:text-white transition-colors duration-500 group">
         Browse All Helpers
         <i data-lucide="arrow-right" class="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform"></i>
       </a>
