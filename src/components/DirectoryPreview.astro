@@ -27,17 +27,13 @@ const displayHelpers = helpers || [];
       {displayHelpers.length > 0 ? (
         displayHelpers.map((helper, index) => (
           <div class={`bg-brand-cream border border-brand-blue/10 p-8 shadow-sm hover:shadow-premium-hover transition-all duration-500 reveal delay-${(index + 1) * 100} flex flex-col h-full group`}>
+            
             <div class="flex items-start justify-between mb-8 pb-8 border-b border-brand-blue/10">
-              <div class="flex items-center gap-5">
-                <div class="w-12 h-12 bg-white flex items-center justify-center text-brand-blue shadow-sm transition-colors">
-                  <i data-lucide="user" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">{helper.name}</h3>
-                  <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: {helper.reference_code}</p>
-                </div>
+              <div>
+                <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">{helper.name}</h3>
+                <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: {helper.reference_code}</p>
               </div>
-              <span class="text-[0.65rem] uppercase tracking-[0.2em] text-brand-text/80 font-bold">{helper.nationality}</span>
+              <span class="text-[0.65rem] uppercase tracking-[0.2em] text-brand-text/80 font-bold text-right pt-1">{helper.nationality}</span>
             </div>
             
             <div class="grid grid-cols-2 gap-y-6 gap-x-4 text-sm text-brand-text/90 mb-8 flex-grow">
