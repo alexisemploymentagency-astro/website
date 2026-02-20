@@ -1,0 +1,147 @@
+---
+// src/components/DirectoryPreview.astro
+---
+
+<section id="browse" class="py-32 bg-white relative border-y border-brand-blue/5">
+    <div class="max-w-7xl mx-auto px-6 md:px-12">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
+        <div class="max-w-2xl">
+          <span class="text-[0.65rem] uppercase tracking-[0.3em] text-brand-blue font-bold mb-4 block">The Database</span>
+          <h2 class="text-4xl md:text-5xl font-serif text-brand-text tracking-tight mb-4">Curated Professionals</h2>
+          <p class="text-brand-text/80 font-normal leading-relaxed">Browse our carefully vetted selection of domestic helpers. Strict confidentiality maintained.</p>
+        </div>
+      </div>
+  
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-0 mb-16 reveal delay-100 border border-brand-blue/20 bg-brand-cream/50 shadow-sm">
+        
+        <div class="relative flex items-center px-6 py-5 border-b md:border-b-0 md:border-r border-brand-blue/20">
+          <i data-lucide="search" class="w-4 h-4 text-brand-text/60 mr-4"></i>
+          <input 
+            type="text" 
+            placeholder="Search by name or reference..." 
+            class="w-full bg-transparent border-none outline-none text-brand-text placeholder:text-brand-text/60 text-sm font-medium"
+            disabled
+          />
+        </div>
+  
+        <div class="relative flex items-center px-6 py-5 border-b md:border-b-0 md:border-r border-brand-blue/20">
+          <select class="w-full bg-transparent border-none outline-none text-brand-text text-sm font-medium appearance-none" disabled>
+            <option>All Nationalities</option>
+          </select>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-brand-text/60 absolute right-6"></i>
+        </div>
+  
+        <div class="flex items-center justify-center px-6 py-5 bg-white">
+          <span class="text-sm font-bold text-brand-blue tracking-wide">3 Professionals Available</span>
+        </div>
+  
+      </div>
+  
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="bg-brand-cream border border-brand-blue/10 p-8 shadow-sm hover:shadow-premium-hover transition-all duration-500 reveal delay-100 flex flex-col h-full group">
+          <div class="flex items-start justify-between mb-8 pb-8 border-b border-brand-blue/10">
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-white flex items-center justify-center text-brand-blue shadow-sm transition-colors">
+                <i data-lucide="user" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">Maria S.</h3>
+                <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: PH-8821</p>
+              </div>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.2em] text-brand-text/80 font-bold">Philippines</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-y-6 gap-x-4 text-sm text-brand-text/90 mb-8 flex-grow">
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Age</span><span class="font-medium">32 Years</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Experience</span><span class="font-medium">6 Years (SG)</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Status</span><span class="font-medium">Married</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Religion</span><span class="font-medium">Catholic</span></div>
+          </div>
+  
+          <div class="mb-10">
+            <p class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-3">Core Expertise</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Infant Care</span>
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Cooking</span>
+            </div>
+          </div>
+  
+          <button class="w-full py-4 bg-transparent border border-brand-text/30 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text hover:text-white hover:border-brand-text transition-all duration-300 mt-auto">
+            Get Consultation
+          </button>
+        </div>
+  
+        <div class="bg-brand-cream border border-brand-blue/10 p-8 shadow-sm hover:shadow-premium-hover transition-all duration-500 reveal delay-200 flex flex-col h-full group">
+          <div class="flex items-start justify-between mb-8 pb-8 border-b border-brand-blue/10">
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-white flex items-center justify-center text-brand-blue shadow-sm transition-colors">
+                <i data-lucide="user" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">Siti A.</h3>
+                <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: ID-9045</p>
+              </div>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.2em] text-brand-text/80 font-bold">Indonesia</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-y-6 gap-x-4 text-sm text-brand-text/90 mb-8 flex-grow">
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Age</span><span class="font-medium">28 Years</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Experience</span><span class="font-medium">3 Years (HK)</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Status</span><span class="font-medium">Single</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Religion</span><span class="font-medium">Muslim</span></div>
+          </div>
+  
+          <div class="mb-10">
+            <p class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-3">Core Expertise</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Elderly Care</span>
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Housework</span>
+            </div>
+          </div>
+  
+          <button class="w-full py-4 bg-transparent border border-brand-text/30 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text hover:text-white hover:border-brand-text transition-all duration-300 mt-auto">
+            Get Consultation
+          </button>
+        </div>
+  
+        <div class="bg-brand-cream border border-brand-blue/10 p-8 shadow-sm hover:shadow-premium-hover transition-all duration-500 reveal delay-300 flex flex-col h-full group">
+          <div class="flex items-start justify-between mb-8 pb-8 border-b border-brand-blue/10">
+            <div class="flex items-center gap-5">
+              <div class="w-12 h-12 bg-white flex items-center justify-center text-brand-blue shadow-sm transition-colors">
+                <i data-lucide="user" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">Khin M.</h3>
+                <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: MM-4412</p>
+              </div>
+            </div>
+            <span class="text-[0.65rem] uppercase tracking-[0.2em] text-brand-text/80 font-bold">Myanmar</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-y-6 gap-x-4 text-sm text-brand-text/90 mb-8 flex-grow">
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Age</span><span class="font-medium">25 Years</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Experience</span><span class="font-medium">Ex-SG</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Status</span><span class="font-medium">Single</span></div>
+            <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Religion</span><span class="font-medium">Buddhist</span></div>
+          </div>
+  
+          <div class="mb-10">
+            <p class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-3">Core Expertise</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Child Care</span>
+              <span class="px-3 py-1.5 bg-white text-brand-text text-xs font-medium border border-brand-blue/10 shadow-sm">Pets Allowed</span>
+            </div>
+          </div>
+  
+          <button class="w-full py-4 bg-transparent border border-brand-text/30 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text hover:text-white hover:border-brand-text transition-all duration-300 mt-auto">
+            Get Consultation
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  </section>

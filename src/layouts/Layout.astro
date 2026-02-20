@@ -1,23 +1,92 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { 
+  title, 
+  description = "Licensed Singapore Employment Agency providing premium, tailored domestic helper matching services." 
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <title>{title} | Alexis Employment PTE LTD</title>
+  </head>
+  <body class="bg-brand-cream text-brand-text antialiased selection:bg-brand-blue selection:text-white min-h-screen flex flex-col font-sans">
+    
+    <slot />
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize Lucide Icons with thinner, more elegant strokes
+        lucide.createIcons({
+          attrs: {
+            'stroke-width': 1.5
+          }
+        });
+        
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px',
+          threshold: 0.15 
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              observer.unobserve(entry.target); 
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((elem) => {
+          observer.observe(elem);
+        });
+      });
+    </script>
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); /* Slower, smoother transition */
+  }
+  
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+
+  ::-webkit-scrollbar {
+    width: 6px; /* Thinner scrollbar */
+  }
+  ::-webkit-scrollbar-track {
+    background: #FCFAF5; 
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1E3A8A;
+    opacity: 0.3;
+  }
 </style>

@@ -1,0 +1,61 @@
+---
+// src/pages/[location].astro
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import Features from '../components/Features.astro';
+import Steps from '../components/Steps.astro';
+import Footer from '../components/Footer.astro';
+
+export function getStaticPaths() {
+  const locations = [
+    { target: 'tampines', name: 'Tampines' },
+    { target: 'jurong', name: 'Jurong' },
+    { target: 'woodlands', name: 'Woodlands' },
+    { target: 'bedok', name: 'Bedok' },
+    { target: 'hougang', name: 'Hougang' },
+    { target: 'yishun', name: 'Yishun' },
+    { target: 'choa-chu-kang', name: 'Choa Chu Kang' },
+    { target: 'sengkang', name: 'Sengkang' },
+    { target: 'serangoon', name: 'Serangoon' },
+    { target: 'bukit-batok', name: 'Bukit Batok' }
+  ];
+
+  return locations.map(({ target, name }) => {
+    return {
+      params: { location: `maid-agency-${target}` },
+      props: { cityName: name },
+    };
+  });
+}
+
+const { cityName } = Astro.props;
+---
+
+<Layout title={`Trusted Maid Agency in ${cityName}`}>
+  <Navbar />
+  
+  <main>
+    <div class="pt-32 pb-0 flex justify-center reveal text-center px-6">
+      <span class="inline-block py-1 px-3 border border-brand-blue/20 bg-brand-blue/5 text-brand-blue font-semibold text-xs uppercase tracking-[0.1em] rounded-full">
+        Serving Families in {cityName}
+      </span>
+    </div>
+
+    <Hero />
+    <Features />
+    <Steps />
+    
+    <section id="consultation" class="py-24 bg-[#F3F0E6] border-y border-[#EBE6D8]">
+      <div class="max-w-3xl mx-auto px-6 md:px-12 text-center reveal">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-4">Get Free Consultation in {cityName}</h2>
+        <p class="text-brand-text/80 mb-8">Tell us about your needs and we'll help you find the perfect helper for your family.</p>
+        <div class="p-8 bg-brand-cream border border-[#EBE6D8] shadow-xl rounded-xl">
+           <p class="text-brand-text/50 italic font-medium">-- Booking Form UI Goes Here --</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

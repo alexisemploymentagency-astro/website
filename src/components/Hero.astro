@@ -1,0 +1,66 @@
+---
+// src/components/Hero.astro
+// 1. We import the Image component from Astro
+import { Image } from 'astro:assets';
+
+// 2. We import your actual local image file
+// CHANGE THIS line to match your exact image name and extension (e.g., .png, .webp)
+import heroBg from '../assets/hero-family.jpg'; 
+---
+
+<section class="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    
+    <div class="max-w-2xl">
+      <div class="mb-6 reveal">
+        <span class="text-[0.65rem] uppercase tracking-[0.3em] text-brand-blue font-bold mb-4 block">Bespoke Helper Matching</span>
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif text-brand-text leading-[1.05] tracking-tight">
+          Find a Trusted Domestic Worker for Your Family.
+        </h1>
+      </div>
+      
+      <p class="text-lg md:text-xl text-brand-text/90 mb-12 leading-relaxed reveal delay-100 font-normal">
+        Licensed Singapore Employment Agency providing highly tailored matching with reliable, trained domestic professionals — safely and compliantly.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-6 mb-16 reveal delay-200">
+        <a href="#browse" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text transition-colors duration-500 shadow-premium">
+          Get Consultation
+        </a>
+        <a href="#consultation" class="inline-flex items-center justify-center px-10 py-4 border border-brand-text/30 text-brand-text font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text transition-colors duration-500 bg-transparent">
+          Browse Helpers
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-y-6 gap-x-8 reveal delay-300 border-t border-brand-blue/10 pt-10">
+        <div class="flex items-center gap-3 text-sm text-brand-text/90">
+          <i data-lucide="shield-check" class="w-5 h-5 text-brand-blue"></i>
+          <span class="font-medium">MOM Licensed</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-brand-text/90">
+          <i data-lucide="gem" class="w-5 h-5 text-brand-blue"></i>
+          <span class="font-medium">Transparent Fees</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-brand-text/90">
+          <i data-lucide="scale" class="w-5 h-5 text-brand-blue"></i>
+          <span class="font-medium">Ethical Recruitment</span>
+        </div>
+        <div class="flex items-center gap-3 text-sm text-brand-text/90">
+          <i data-lucide="clock" class="w-5 h-5 text-brand-blue"></i>
+          <span class="font-medium">Efficient Placement</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-full h-[550px] md:h-[650px] overflow-hidden reveal delay-200 shadow-premium">
+      <div class="absolute inset-0 bg-brand-text/5 z-10 pointer-events-none"></div>
+      
+      <Image 
+        src={heroBg} 
+        alt="Premium domestic helper service" 
+        class="w-full h-full object-cover object-center transition-transform duration-[2000ms] hover:scale-105"
+      />
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,35 @@
+---
+// src/components/Navbar.astro
+---
+
+<header class="w-full absolute top-0 left-0 z-50 py-8 reveal">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      
+      <a href="/" class="flex items-center gap-2 group">
+        <div class="flex flex-col">
+          <span class="text-3xl font-serif font-bold text-brand-blue tracking-tight group-hover:text-brand-text transition-colors duration-500">
+            Alexis
+          </span>
+          <span class="text-[0.55rem] uppercase tracking-[0.3em] text-brand-text/70 font-bold">
+            Employment Pte Ltd
+          </span>
+        </div>
+      </a>
+  
+      <nav class="hidden md:flex items-center gap-10">
+        <a href="#browse" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">Browse</a>
+        <a href="#how-it-works" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">Process</a>
+        <a href="#about" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">About</a>
+      </nav>
+  
+      <div class="hidden md:block">
+        <a href="#consultation" class="inline-flex items-center justify-center px-8 py-3 border border-brand-text/20 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-brand-text hover:bg-brand-text hover:text-white transition-all duration-500">
+          Get Consultation
+        </a>
+      </div>
+  
+      <button class="md:hidden text-brand-text">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </header>
