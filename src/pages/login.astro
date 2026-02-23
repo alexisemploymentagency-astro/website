@@ -19,6 +19,9 @@ import Footer from '../components/Footer.astro';
         <p class="text-sm text-brand-text/70">Sign in to view full, unredacted candidate dossiers.</p>
       </div>
 
+      <div id="error-message" class="hidden w-full p-4 mb-6 bg-brand-red/10 border border-brand-red/20 text-brand-red text-xs font-bold text-center uppercase tracking-wider">
+      </div>
+
       <form id="login-form" class="space-y-6">
         <div>
           <label for="email" class="block text-[0.65rem] font-bold uppercase tracking-[0.2em] text-brand-text/80 mb-2">Email Address</label>
@@ -65,28 +68,55 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <script>
+  // Import our secure Supabase connection
+  import { supabase } from '../lib/supabase';
+
   document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('login-form');
     const submitBtn = document.getElementById('submit-btn');
+    const errorMsg = document.getElementById('error-message');
 
     if (loginForm) {
-      loginForm.addEventListener('submit', (e) => {
+      loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // 1. Update UI to show loading state
+        // Grab the credentials
+        const email = (document.getElementById('email') as HTMLInputElement).value;
+        const password = (document.getElementById('password') as HTMLInputElement).value;
+
+        // 1. Update UI to loading state
         if (submitBtn) {
           submitBtn.innerHTML = '<span class="animate-pulse">Authenticating...</span>';
           submitBtn.setAttribute('disabled', 'true');
         }
+        if (errorMsg) errorMsg.classList.add('hidden');
 
-        // 2. Simulate a network request (1.2 seconds), then log them in locally
-        setTimeout(() => {
-          // Drop a dummy token into the browser so the Directory page knows we logged in
-          localStorage.setItem('alexis_dummy_auth', 'true');
-          
-          // Redirect to the directory
-          window.location.href = '/directory';
-        }, 1200);
+        // 2. ASK SUPABASE TO VERIFY
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        });
+
+        // 3. HANDLE ERRORS (Wrong password, invalid email, etc.)
+        if (error) {
+          if (submitBtn) {
+            submitBtn.innerHTML = '<span>Secure Sign In</span>';
+            submitBtn.removeAttribute('disabled');
+          }
+          if (errorMsg) {
+            // Supabase returns generic safe messages like "Invalid login credentials"
+            errorMsg.textContent = error.message; 
+            errorMsg.classList.remove('hidden');
+          }
+          return;
+        }
+
+        // 4. SUCCESS! The user is real and authorized.
+        // We set our UI flag so the Directory knows to unblur the data
+        localStorage.setItem('alexis_dummy_auth', 'true');
+        
+        // Redirect to the directory
+        window.location.href = '/directory';
       });
     }
   });
