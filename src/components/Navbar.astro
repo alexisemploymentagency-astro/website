@@ -2,9 +2,9 @@
 // src/components/Navbar.astro
 import logoImage from '../assets/logo.png';
 
-// Stegg Feature: Check if we are currently on the directory page
+// Stegg Fix: Now checks for BOTH directory and profile paths to show the auth buttons!
 const currentPath = Astro.url.pathname;
-const isDirectory = currentPath.includes('/directory');
+const isPortal = currentPath.includes('/directory') || currentPath.includes('/profile');
 ---
 
 <header class="w-full absolute top-0 left-0 z-[70] py-8 reveal">
@@ -26,7 +26,7 @@ const isDirectory = currentPath.includes('/directory');
 
     <div class="hidden md:flex items-center gap-8 relative z-[80]">
       
-      {isDirectory && (
+      {isPortal && (
         <>
           <a href="/login" class="auth-login-btn text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-brand-text transition-colors duration-300">
             Client Login
@@ -58,7 +58,7 @@ const isDirectory = currentPath.includes('/directory');
   <a href="/#how-it-works" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Process</a>
   <a href="/#about" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">About</a>
   
-  {isDirectory && (
+  {isPortal && (
     <>
       <a href="/login" class="auth-login-btn mobile-link text-lg uppercase tracking-widest font-bold text-brand-blue hover:text-brand-text transition-colors duration-300">
         Client Login
@@ -76,7 +76,6 @@ const isDirectory = currentPath.includes('/directory');
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // --- Mobile Menu Toggle Logic ---
     const toggleBtn = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const iconMenu = document.getElementById('icon-menu');
@@ -120,17 +119,16 @@ const isDirectory = currentPath.includes('/directory');
     const loginBtns = document.querySelectorAll('.auth-login-btn');
     const logoutBtns = document.querySelectorAll('.auth-logout-btn');
 
-    // If they are logged in, hide Login and show Logout
     if (isAuthenticated) {
       loginBtns.forEach(btn => btn.classList.add('hidden'));
       logoutBtns.forEach(btn => btn.classList.remove('hidden'));
     }
 
-    // Destroy token and refresh
     logoutBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         localStorage.removeItem('alexis_dummy_auth');
-        window.location.reload(); 
+        // Redirect to directory on logout if they are deep in a profile
+        window.location.href = '/directory'; 
       });
     });
   });
