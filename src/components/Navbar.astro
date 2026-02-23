@@ -1,15 +1,18 @@
 ---
 // src/components/Navbar.astro
-import { Image } from 'astro:assets';
 import logoImage from '../assets/logo.png';
+
+// Stegg Feature: Check if we are currently on the directory page
+const currentPath = Astro.url.pathname;
+const isDirectory = currentPath.includes('/directory');
 ---
 
 <header class="w-full absolute top-0 left-0 z-[70] py-8 reveal">
   <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between relative">
     
     <a href="/" class="flex items-center gap-2 group relative z-[80]">
-      <Image 
-        src={logoImage} 
+      <img 
+        src={logoImage.src} 
         alt="Alexis Employment Pte Ltd" 
         class="h-16 md:h-20 w-auto object-contain group-hover:opacity-80 transition-opacity duration-300"
       />
@@ -21,7 +24,19 @@ import logoImage from '../assets/logo.png';
       <a href="/#about" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">About</a>
     </nav>
 
-    <div class="hidden md:block">
+    <div class="hidden md:flex items-center gap-8 relative z-[80]">
+      
+      {isDirectory && (
+        <>
+          <a href="/login" class="auth-login-btn text-xs uppercase tracking-widest font-bold text-brand-blue hover:text-brand-text transition-colors duration-300">
+            Client Login
+          </a>
+          <button class="auth-logout-btn hidden text-xs uppercase tracking-widest font-bold text-brand-red hover:text-brand-text transition-colors duration-300">
+            Logout
+          </button>
+        </>
+      )}
+
       <a href="/#consultation" class="inline-flex items-center justify-center px-8 py-3 border border-brand-text/20 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-brand-text hover:bg-brand-text hover:text-white transition-all duration-500">
         Get Consultation
       </a>
@@ -42,6 +57,18 @@ import logoImage from '../assets/logo.png';
   <a href="/directory" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Browse Helpers</a>
   <a href="/#how-it-works" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Process</a>
   <a href="/#about" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">About</a>
+  
+  {isDirectory && (
+    <>
+      <a href="/login" class="auth-login-btn mobile-link text-lg uppercase tracking-widest font-bold text-brand-blue hover:text-brand-text transition-colors duration-300">
+        Client Login
+      </a>
+      <button class="auth-logout-btn mobile-link hidden text-lg uppercase tracking-widest font-bold text-brand-red hover:text-brand-text transition-colors duration-300">
+        Logout
+      </button>
+    </>
+  )}
+
   <a href="/#consultation" class="mobile-link mt-6 inline-flex items-center justify-center px-10 py-5 bg-brand-blue text-white text-xs font-bold uppercase tracking-[0.2em] w-full max-w-xs shadow-premium">
     Get Consultation
   </a>
@@ -49,6 +76,7 @@ import logoImage from '../assets/logo.png';
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // --- Mobile Menu Toggle Logic ---
     const toggleBtn = document.getElementById('mobile-menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const iconMenu = document.getElementById('icon-menu');
@@ -61,35 +89,20 @@ import logoImage from '../assets/logo.png';
       isMenuOpen = !isMenuOpen;
       
       if (isMenuOpen) {
-        // Show menu overlay
         mobileMenu.classList.remove('hidden');
         mobileMenu.classList.add('flex');
-        
-        // Force reflow
         void mobileMenu.offsetWidth;
-        
         mobileMenu.classList.remove('opacity-0');
         mobileMenu.classList.add('opacity-100');
-        
-        // Morph icons
         iconMenu.classList.replace('opacity-100', 'opacity-0');
         iconClose.classList.replace('opacity-0', 'opacity-100');
-        
-        // Prevent background scrolling
         document.body.style.overflow = 'hidden';
       } else {
-        // Hide menu overlay
         mobileMenu.classList.remove('opacity-100');
         mobileMenu.classList.add('opacity-0');
-        
-        // Morph icons back
         iconMenu.classList.replace('opacity-0', 'opacity-100');
         iconClose.classList.replace('opacity-100', 'opacity-0');
-        
-        // Restore background scrolling
         document.body.style.overflow = '';
-        
-        // Wait for fade out to finish before adding hidden
         setTimeout(() => {
           mobileMenu.classList.add('hidden');
           mobileMenu.classList.remove('flex');
@@ -97,14 +110,27 @@ import logoImage from '../assets/logo.png';
       }
     }
 
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', toggleMenu);
+    if (toggleBtn) toggleBtn.addEventListener('click', toggleMenu);
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); });
+    });
+
+    // --- Dynamic Auth Logic for Navbar ---
+    const isAuthenticated = localStorage.getItem('alexis_dummy_auth') === 'true';
+    const loginBtns = document.querySelectorAll('.auth-login-btn');
+    const logoutBtns = document.querySelectorAll('.auth-logout-btn');
+
+    // If they are logged in, hide Login and show Logout
+    if (isAuthenticated) {
+      loginBtns.forEach(btn => btn.classList.add('hidden'));
+      logoutBtns.forEach(btn => btn.classList.remove('hidden'));
     }
 
-    // Auto-close menu when a link is clicked
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if(isMenuOpen) toggleMenu();
+    // Destroy token and refresh
+    logoutBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        localStorage.removeItem('alexis_dummy_auth');
+        window.location.reload(); 
       });
     });
   });
