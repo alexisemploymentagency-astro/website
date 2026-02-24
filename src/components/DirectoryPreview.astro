@@ -69,7 +69,7 @@ const displayHelpers = (dbHelpers || []).map(row => ({
               <div>
                 <a href={`/profile/${helper.reference_code}`} class="hover:text-brand-blue transition-colors">
                   <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">
-                    {isAuthenticated ? helper.name : <>{helper.alias} <span class="text-sm font-normal text-brand-text/50">(Restricted)</span></>}
+                    {helper.name}
                   </h3>
                 </a>
                 <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: {helper.reference_code}</p>

@@ -7,6 +7,7 @@ import DirectoryPreview from '../components/DirectoryPreview.astro';
 import Features from '../components/Features.astro';
 import Steps from '../components/Steps.astro';
 import Testimonials from '../components/Testimonials.astro';
+import Consultation from '../components/Consultation.astro'; // <-- We imported your new form here!
 import Footer from '../components/Footer.astro';
 ---
 
@@ -24,15 +25,7 @@ import Footer from '../components/Footer.astro';
 
     <Testimonials />
     
-    <section id="consultation" class="py-24 bg-[#F3F0E6] border-y border-[#EBE6D8]">
-      <div class="max-w-3xl mx-auto px-6 md:px-12 text-center reveal">
-        <h2 class="text-3xl md:text-4xl font-extrabold text-brand-text tracking-tight mb-4">Get Free Consultation</h2>
-        <p class="text-brand-text/80 mb-8">Tell us about your needs and we'll help you find the perfect helper for your family.</p>
-        <div class="p-8 bg-brand-cream border border-[#EBE6D8] shadow-xl rounded-xl">
-           <p class="text-brand-text/50 italic font-medium">-- Booking Form UI Goes Here --</p>
-        </div>
-      </div>
-    </section>
+    <Consultation /> 
   </main>
 
   <Footer />
