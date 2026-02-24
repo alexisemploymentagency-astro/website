@@ -92,7 +92,6 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <script>
-  // Import our secure Supabase connection
   import { supabase } from '../lib/supabase';
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -104,20 +103,17 @@ import Footer from '../components/Footer.astro';
       registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Grab the values from the form
         const name = (document.getElementById('name') as HTMLInputElement).value;
         const phone = (document.getElementById('phone') as HTMLInputElement).value;
         const email = (document.getElementById('email') as HTMLInputElement).value;
         const password = (document.getElementById('password') as HTMLInputElement).value;
 
-        // Update UI to Loading State
         if (submitBtn) {
           submitBtn.innerHTML = '<span class="animate-pulse">Connecting to Server...</span>';
           submitBtn.setAttribute('disabled', 'true');
         }
         if (errorMsg) errorMsg.classList.add('hidden');
 
-        // FIRE TO SUPABASE
         const { data, error } = await supabase.auth.signUp({
           email: email,
           password: password,
@@ -129,7 +125,6 @@ import Footer from '../components/Footer.astro';
           }
         });
 
-        // HANDLE ERRORS (e.g., Email already exists, password too short)
         if (error) {
           if (submitBtn) {
             submitBtn.innerHTML = '<span>Create Account</span>';
@@ -142,12 +137,15 @@ import Footer from '../components/Footer.astro';
           return;
         }
 
-        // SUCCESS! 
-        // We set the browser auth flag so the Directory knows to unblur the data
-        localStorage.setItem('alexis_dummy_auth', 'true');
+        if (data.session) {
+          document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=3600; SameSite=Lax`;
+          localStorage.removeItem('alexis_dummy_auth');
+        }
         
-        // Redirect them straight to the unblurred directory
-        window.location.href = '/directory';
+        // STEGG FIX: 200ms delay + Cache Buster for newly registered users!
+        setTimeout(() => {
+          window.location.replace('/directory?action=register&t=' + Date.now());
+        }, 200);
       });
     }
   });

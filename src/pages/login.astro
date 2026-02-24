@@ -68,7 +68,6 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <script>
-  // Import our secure Supabase connection
   import { supabase } from '../lib/supabase';
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -80,43 +79,41 @@ import Footer from '../components/Footer.astro';
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Grab the credentials
         const email = (document.getElementById('email') as HTMLInputElement).value;
         const password = (document.getElementById('password') as HTMLInputElement).value;
 
-        // 1. Update UI to loading state
         if (submitBtn) {
           submitBtn.innerHTML = '<span class="animate-pulse">Authenticating...</span>';
           submitBtn.setAttribute('disabled', 'true');
         }
         if (errorMsg) errorMsg.classList.add('hidden');
 
-        // 2. ASK SUPABASE TO VERIFY
         const { data, error } = await supabase.auth.signInWithPassword({
           email: email,
           password: password,
         });
 
-        // 3. HANDLE ERRORS (Wrong password, invalid email, etc.)
         if (error) {
           if (submitBtn) {
             submitBtn.innerHTML = '<span>Secure Sign In</span>';
             submitBtn.removeAttribute('disabled');
           }
           if (errorMsg) {
-            // Supabase returns generic safe messages like "Invalid login credentials"
             errorMsg.textContent = error.message; 
             errorMsg.classList.remove('hidden');
           }
           return;
         }
 
-        // 4. SUCCESS! The user is real and authorized.
-        // We set our UI flag so the Directory knows to unblur the data
-        localStorage.setItem('alexis_dummy_auth', 'true');
+        if (data.session) {
+          document.cookie = `sb-access-token=${data.session.access_token}; path=/; max-age=3600; SameSite=Lax`;
+          localStorage.removeItem('alexis_dummy_auth'); 
+        }
         
-        // Redirect to the directory
-        window.location.href = '/directory';
+        // STEGG FIX: 200ms delay + Cache Buster
+        setTimeout(() => {
+          window.location.replace('/directory?action=login&t=' + Date.now());
+        }, 200);
       });
     }
   });

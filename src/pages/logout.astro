@@ -1,0 +1,12 @@
+---
+// src/pages/logout.astro
+
+// Kill the cookie normally
+Astro.cookies.delete('sb-access-token', { path: '/' });
+
+// Hard overwrite it to maxAge: 0 just in case the browser is being stubborn
+Astro.cookies.set('sb-access-token', '', { path: '/', maxAge: 0 });
+
+// STEGG FIX 2: Redirect with a timestamp to force the browser to drop the cached version!
+return Astro.redirect('/directory?action=logout&t=' + Date.now());
+---

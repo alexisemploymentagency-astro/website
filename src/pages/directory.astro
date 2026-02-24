@@ -3,9 +3,21 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
-import { supabase } from '../lib/supabase'; // 1. Import your live connection!
+import { supabase } from '../lib/supabase';
 
-// 2. Fetch the live data from Supabase!
+// 1. ENTERPRISE SECURITY: Check for the secure cookie on the server
+const accessToken = Astro.cookies.get('sb-access-token')?.value;
+let isAuthenticated = false;
+
+if (accessToken) {
+  // Verify the token is real and hasn't been tampered with
+  const { data, error } = await supabase.auth.getUser(accessToken);
+  if (data?.user && !error) {
+    isAuthenticated = true;
+  }
+}
+
+// 2. Fetch the live data from Supabase
 const { data: dbHelpers, error } = await supabase
   .from('helpers')
   .select('*')
@@ -15,27 +27,30 @@ if (error) {
   console.error("Supabase Error:", error.message);
 }
 
-// 3. Map the Database JSON columns to perfectly match our beautiful UI
+// 3. Map the data
 const displayHelpers = (dbHelpers || []).map(row => ({
   ...row,
   age: row.personal?.age || '-',
-  experience: 'View Dossier', // Since we moved to a chronological timeline, we point them to the profile
+  experience: 'View Profile', 
   marital_status: row.personal?.marital_status || '-',
   religion: row.personal?.religion || '-',
-  skills: row.core_expertise || [] // Map the DB column 'core_expertise' back to 'skills' for the UI
+  skills: row.core_expertise || [] 
 }));
 ---
 
 <Layout title="Browse Available Helpers | Alexis Employment">
-  <Navbar />
+  <Navbar isAuthenticated={isAuthenticated} />
   
   <div class="bg-brand-cream border-b border-brand-blue/5 pt-40 md:pt-48 pb-16">
     <div class="max-w-7xl mx-auto px-6 md:px-12">
       <div class="reveal">
-        <span class="text-[0.65rem] uppercase tracking-[0.3em] text-brand-blue font-bold mb-4 block">The Database</span>
+        <span class="text-[0.65rem] uppercase tracking-[0.3em] text-brand-blue font-bold mb-4 block"></span>
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif text-brand-text tracking-tight mb-6">Available Professionals</h1>
-        <p id="hero-desc" class="text-brand-text/80 font-normal leading-relaxed max-w-2xl transition-opacity duration-300">
-          Browse our strictly vetted roster. Create a free client account to view unredacted details and full candidate profiles.
+        
+        <p class="text-brand-text/80 font-normal leading-relaxed max-w-2xl transition-opacity duration-300">
+          {isAuthenticated 
+            ? "Welcome back. You are viewing the full, unredacted database of available professionals." 
+            : "Browse our strictly vetted roster. Create a free client account to view unredacted details and full candidate profiles."}
         </p>
       </div>
     </div>
@@ -52,7 +67,6 @@ const displayHelpers = (dbHelpers || []).map(row => ({
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          
           <div class="relative border border-brand-blue/20 bg-white">
             <select id="filter-nationality" class="w-full bg-transparent border-none outline-none text-brand-text text-xs font-bold uppercase tracking-wider appearance-none focus:ring-0 cursor-pointer py-4 pl-4 pr-10">
               <option value="all">All Nationalities</option>
@@ -99,7 +113,6 @@ const displayHelpers = (dbHelpers || []).map(row => ({
             </select>
             <i data-lucide="chevron-down" class="w-4 h-4 text-brand-text/60 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
           </div>
-
         </div>
 
         <div class="flex items-center justify-between border-t border-brand-blue/10 pt-4">
@@ -127,16 +140,20 @@ const displayHelpers = (dbHelpers || []).map(row => ({
             >
               
               <a href={`/profile/${helper.reference_code}`} class="block w-full h-48 mb-8 bg-brand-text/5 relative overflow-hidden border border-brand-blue/10 group-hover:border-brand-blue/30 transition-colors">
-                <img src={helper.photo_url} alt="Candidate Profile" class="profile-img w-full h-full object-cover object-top transition-all duration-700 blur-xl grayscale opacity-60 scale-110 group-hover:scale-105" />
-                <div class="lock-overlay absolute inset-0 flex items-center justify-center bg-brand-text/20 backdrop-blur-sm transition-opacity duration-500">
-                  <i data-lucide="lock" class="w-8 h-8 text-white opacity-80"></i>
-                </div>
+                <img src={helper.photo_url} alt="Candidate Profile" class={`profile-img w-full h-full object-cover object-top transition-all duration-700 ${isAuthenticated ? 'blur-0' : 'blur-lg scale-110 group-hover:scale-105'}`} />
+                {!isAuthenticated && (
+                  <div class="absolute inset-0 flex items-center justify-center bg-brand-text/20 backdrop-blur-sm transition-opacity duration-500">
+                    <i data-lucide="lock" class="w-8 h-8 text-white opacity-90"></i>
+                  </div>
+                )}
               </a>
 
               <div class="flex items-start justify-between mb-8 pb-8 border-b border-brand-blue/10">
                 <div>
                   <a href={`/profile/${helper.reference_code}`} class="hover:text-brand-blue transition-colors">
-                    <h3 class="auth-text text-xl font-serif text-brand-text mb-1 font-bold" data-real={helper.name}>{helper.alias} <span class="text-sm font-normal text-brand-text/50">(Restricted)</span></h3>
+                    <h3 class="text-xl font-serif text-brand-text mb-1 font-bold">
+                      {isAuthenticated ? helper.name : <>{helper.alias} <span class="text-sm font-normal text-brand-text/50">(Restricted)</span></>}
+                    </h3>
                   </a>
                   <p class="text-[0.65rem] text-brand-text/70 font-bold uppercase tracking-[0.2em]">Ref: {helper.reference_code}</p>
                 </div>
@@ -147,11 +164,16 @@ const displayHelpers = (dbHelpers || []).map(row => ({
               </div>
               
               <div class="grid grid-cols-2 gap-y-6 gap-x-4 text-sm text-brand-text/90 mb-8 flex-grow">
-                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Age</span><span class="auth-text font-medium" data-real={`${helper.age} Years`}>Hidden</span></div>
-                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Experience</span><span class="auth-text font-medium" data-real={helper.experience}>Hidden</span></div>
-                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Status</span><span class="auth-text font-medium" data-real={helper.marital_status}>Hidden</span></div>
-                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Religion</span><span class="auth-text font-medium" data-real={helper.religion}>Hidden</span></div>
-                <div class="flex flex-col col-span-2"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Languages</span><span class="auth-text font-medium" data-real={helper.languages.join(', ')}>Hidden</span></div>
+                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Age</span><span class="font-medium">{helper.age} Years</span></div>
+                <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Languages</span><span class="font-medium">{helper.languages.join(', ')}</span></div>
+                
+                {isAuthenticated && (
+                  <>
+                    <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Experience</span><span class="font-medium">{helper.experience}</span></div>
+                    <div class="flex flex-col"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Status</span><span class="font-medium">{helper.marital_status}</span></div>
+                    <div class="flex flex-col col-span-2"><span class="text-[0.65rem] uppercase tracking-wider text-brand-text/60 font-bold mb-1">Religion</span><span class="font-medium">{helper.religion}</span></div>
+                  </>
+                )}
               </div>
 
               <div class="mb-10">
@@ -163,12 +185,15 @@ const displayHelpers = (dbHelpers || []).map(row => ({
                 </div>
               </div>
 
-              <a href={`/profile/${helper.reference_code}`} class="btn-unlocked hidden w-full py-4 text-center bg-brand-blue text-white text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text transition-all duration-300 mt-auto items-center justify-center gap-3 shadow-premium">
-                <i data-lucide="user" class="w-4 h-4"></i> View Full Dossier
-              </a>
-              <a href="/login" class="btn-locked w-full py-4 text-center bg-white border border-brand-text/20 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:border-brand-text transition-all duration-300 mt-auto flex items-center justify-center gap-3 shadow-sm">
-                <i data-lucide="key" class="w-4 h-4"></i> Unlock Profile
-              </a>
+              {isAuthenticated ? (
+                <a href={`/profile/${helper.reference_code}`} class="w-full flex py-4 text-center bg-brand-blue text-white text-xs uppercase tracking-[0.15em] font-bold hover:bg-brand-text transition-all duration-300 mt-auto items-center justify-center gap-3 shadow-premium">
+                  <i data-lucide="user" class="w-4 h-4"></i> View Full Profile
+                </a>
+              ) : (
+                <a href="/login" class="w-full flex py-4 text-center bg-white border border-brand-text/20 text-brand-text text-xs uppercase tracking-[0.15em] font-bold hover:border-brand-text transition-all duration-300 mt-auto items-center justify-center gap-3 shadow-sm">
+                  <i data-lucide="key" class="w-4 h-4"></i> Unlock Profile
+                </a>
+              )}
 
             </div>
           ))
@@ -192,32 +217,10 @@ const displayHelpers = (dbHelpers || []).map(row => ({
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    // 1. Auth Logic 
-    const isAuthenticated = localStorage.getItem('alexis_dummy_auth') === 'true';
+    // Note: All the complex DOM manipulation (unblurring, showing/hiding data) 
+    // has been completely DELETED from this script! The server handles it safely now.
 
-    if (isAuthenticated) {
-      const heroDesc = document.getElementById('hero-desc');
-      if (heroDesc) heroDesc.textContent = "Welcome back. You are viewing the full, unredacted database of available professionals.";
-
-      document.querySelectorAll('.profile-img').forEach(img => {
-        img.classList.remove('blur-xl', 'grayscale', 'opacity-60', 'scale-110');
-        img.classList.add('blur-0', 'grayscale-0');
-      });
-      document.querySelectorAll('.lock-overlay').forEach(overlay => overlay.classList.add('opacity-0', 'pointer-events-none'));
-
-      document.querySelectorAll('.auth-text').forEach(textNode => {
-        const realData = textNode.getAttribute('data-real');
-        if (realData) textNode.innerHTML = realData; // Use innerHTML to cleanly replace the span
-      });
-
-      document.querySelectorAll('.btn-locked').forEach(btn => btn.classList.add('hidden'));
-      document.querySelectorAll('.btn-unlocked').forEach(btn => {
-        btn.classList.remove('hidden');
-        btn.classList.add('flex');
-      });
-    }
-
-    // 2. Multi-Filter Logic
+    // 1. Multi-Filter Logic
     const searchInput = document.getElementById('filter-search') as HTMLInputElement;
     const filterNat = document.getElementById('filter-nationality') as HTMLSelectElement;
     const filterBio = document.getElementById('filter-biotype') as HTMLSelectElement;
@@ -240,7 +243,6 @@ const displayHelpers = (dbHelpers || []).map(row => ({
       cards.forEach((card) => {
         const c = card as HTMLElement;
         
-        // Grab data embedded in the card
         const cardName = c.getAttribute('data-name') || '';
         const cardRef = c.getAttribute('data-ref') || '';
         const cardNat = c.getAttribute('data-nationality') || '';
@@ -248,14 +250,12 @@ const displayHelpers = (dbHelpers || []).map(row => ({
         const cardLangs = c.getAttribute('data-languages') || '';
         const cardSkills = c.getAttribute('data-skills') || '';
 
-        // Check if card matches each filter
         const matchSearch = cardName.includes(searchVal) || cardRef.includes(searchVal);
         const matchNat = natVal === 'all' || cardNat === natVal;
         const matchBio = bioVal === 'all' || cardBio === bioVal;
         const matchLang = langVal === 'all' || cardLangs.includes(langVal);
         const matchExp = expVal === 'all' || cardSkills.includes(expVal);
 
-        // ONLY show if it matches ALL active filters
         if (matchSearch && matchNat && matchBio && matchLang && matchExp) {
           c.style.display = 'flex';
           visibleCount++;
@@ -267,12 +267,10 @@ const displayHelpers = (dbHelpers || []).map(row => ({
       if (resultCount) resultCount.textContent = visibleCount.toString();
     }
 
-    // Attach listeners to all inputs
     [searchInput, filterNat, filterBio, filterLang, filterExp].forEach(input => {
       if (input) input.addEventListener('input', filterHelpers);
     });
 
-    // Reset Button Logic
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
         if(searchInput) searchInput.value = '';
@@ -280,7 +278,7 @@ const displayHelpers = (dbHelpers || []).map(row => ({
         if(filterBio) filterBio.value = 'all';
         if(filterLang) filterLang.value = 'all';
         if(filterExp) filterExp.value = 'all';
-        filterHelpers(); // Trigger reset
+        filterHelpers(); 
       });
     }
   });
