@@ -7,11 +7,10 @@ import DirectoryPreview from '../components/DirectoryPreview.astro';
 import Features from '../components/Features.astro';
 import Steps from '../components/Steps.astro';
 import Testimonials from '../components/Testimonials.astro';
-import Consultation from '../components/Consultation.astro'; // <-- We imported your new form here!
+import Consultation from '../components/Consultation.astro';
 import AboutDirector from '../components/AboutDirector.astro';
 import Footer from '../components/Footer.astro';
 ---
-
 <Layout title="Find Trusted Domestic Helpers">
   <Navbar />
   
@@ -21,15 +20,14 @@ import Footer from '../components/Footer.astro';
     <DirectoryPreview />
     
     <Features />
+    
     <Steps />
-<AboutDirector />
-<Testimonials />
-    <Steps />
-
+    
+    <AboutDirector />
+    
     <Testimonials />
     
-    <Consultation /> 
+    <Consultation />
   </main>
-
   <Footer />
 </Layout>
