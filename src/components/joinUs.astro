@@ -12,7 +12,9 @@
     </div>
 
     <div class="bg-white border border-brand-blue/10 p-10 shadow-premium rounded-md">
-      <form id="join-us-form" class="space-y-6">
+      <form name="join-us" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+        <input type="hidden" name="form-name" value="join-us" />
+        <input type="hidden" name="bot-field" />
         
         <div>
           <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Full Name</label>
@@ -42,20 +44,8 @@
           Submit Application
         </button>
 
-        <div id="success-msg" class="hidden text-center text-green-600 font-medium">
-          Thank you! We will be in touch soon.
-        </div>
-
       </form>
     </div>
 
   </div>
 </section>
-
-<script is:inline>
-  document.getElementById('join-us-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    document.getElementById('success-msg').classList.remove('hidden');
-    this.reset();
-  });
-</script>
