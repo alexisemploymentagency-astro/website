@@ -7,45 +7,131 @@
       <span class="text-[0.65rem] uppercase tracking-widest text-brand-blue font-bold mb-4 block">Career Opportunities</span>
       <h2 class="text-4xl md:text-5xl font-serif text-brand-text tracking-tight mb-6">Join Our Team</h2>
       <p class="text-brand-text/80 font-normal leading-relaxed">
-        We are always looking for passionate individuals to join the Alexis Employment Agency family. Fill in your details below and we'll be in touch.
+        We are always looking for passionate individuals to join the Alexis Employment Agency family.
       </p>
     </div>
 
-    <div class="bg-white border border-brand-blue/10 p-10 shadow-premium rounded-md">
-      <form name="join-us" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
-        <input type="hidden" name="form-name" value="join-us" />
-        <input type="hidden" name="bot-field" />
-        
-        <div>
-          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Full Name</label>
-          <input type="text" name="name" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+    <style is:inline>
+      @font-face {
+        font-display: block;
+        font-family: Roboto;
+        src: url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/7529907e9eaf8ebb5220c5f9850e3811.woff2) format("woff2"), url(https://assets.brevo.com/font/Roboto/Latin/normal/normal/25c678feafdc175a70922a116c9be3e7.woff) format("woff")
+      }
+      #sib-container input:-ms-input-placeholder { font-family: Helvetica, sans-serif; text-align: left; color: #c0ccda; }
+      #sib-container input::placeholder { font-family: Helvetica, sans-serif; text-align: left; color: #c0ccda; }
+      #sib-container textarea::placeholder { font-family: Helvetica, sans-serif; text-align: left; color: #c0ccda; }
+      #sib-container a { text-decoration: underline; color: #2BB2FC; }
+    </style>
+    <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+
+    <div class="sib-form" style="text-align: center; background-color: #EFF2F7;">
+      <div id="sib-form-container" class="sib-form-container">
+        <div id="error-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949; max-width:540px;">
+          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span class="sib-form-message-panel__inner-text">Your application could not be saved. Please try again.</span>
+          </div>
         </div>
-
-        <div>
-          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Phone Number</label>
-          <input type="tel" name="phone" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+        <div id="success-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#085229; background-color:#e7faf0; border-radius:3px; border-color:#13ce66; max-width:540px;">
+          <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span class="sib-form-message-panel__inner-text">Your application has been successful.</span>
+          </div>
         </div>
-
-        <div>
-          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Email</label>
-          <input type="email" name="email" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+        <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center; background-color:rgba(255,255,255,1); max-width:540px; border-radius:3px; border-width:1px; border-color:#C0CCD9; border-style:solid; direction:ltr">
+          <form id="sib-form" method="POST" action="https://2966b28f.sibforms.com/serve/MUIFALgrKuaNMPTMhMf81qRXlBmDFBbFuYOOJgaB5Q0fYe4V65rOUA0vKLSmZyUxI3PErmaRovjFEklS8iy32ZF8ZfSsRmNFAcUveEY5U89ZAmotPC3_hWQUz9pCxuob2_bU_Lo9PLwpcg1tH0ymrz0ozrsyrcg6Dj8jYCYG98-0rBicE08FLXiIOsBmUKuhMcmvgm3Or_EzJdZUhw==" data-type="subscription">
+            <div style="padding: 8px 0;">
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" style="font-weight:700; text-align:left; font-family:Helvetica, sans-serif; font-size:16px; color:#3c4858;" for="FIRSTNAME" data-required="*">Full Name</label>
+                    <div class="entry__field">
+                      <input class="input" maxlength="200" type="text" id="FIRSTNAME" name="FIRSTNAME" autocomplete="off" placeholder="Your full name" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;"></label>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 8px 0;">
+              <div class="sib-sms-field sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" style="font-weight:700; text-align:left; font-family:Helvetica, sans-serif; font-size:16px; color:#3c4858;" for="SMS" data-required="*">Phone Number</label>
+                    <div class="sib-sms-input-wrapper" style="direction:ltr">
+                      <div class="sib-sms-input" data-placeholder="XXXX XXXX" data-required="true" data-country-code="SG" data-value="" data-attributename="SMS">
+                        <div class="entry__field">
+                          <select class="input" name="SMS__COUNTRY_CODE" data-required="true">
+                            <option value="+65">+65 SG</option>
+                            <option value="+60">+60 MY</option>
+                            <option value="+63">+63 PH</option>
+                            <option value="+62">+62 ID</option>
+                            <option value="+91">+91 IN</option>
+                            <option value="+1">+1 US</option>
+                            <option value="+44">+44 GB</option>
+                          </select>
+                        </div>
+                        <div class="entry__field" style="width: 100%">
+                          <input type="tel" class="input" id="SMS" name="SMS" autocomplete="off" placeholder="XXXX XXXX" data-required="true" required />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;"></label>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 8px 0;">
+              <div class="sib-input sib-form-block">
+                <div class="form__entry entry_block">
+                  <div class="form__label-row">
+                    <label class="entry__label" style="font-weight:700; text-align:left; font-family:Helvetica, sans-serif; font-size:16px; color:#3c4858;" for="EMAIL" data-required="*">Email</label>
+                    <div class="entry__field">
+                      <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="your@email.com" data-required="true" required />
+                    </div>
+                  </div>
+                  <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:Helvetica, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;"></label>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 8px 0;">
+              <div class="sib-optin sib-form-block">
+                <div class="form__entry entry_mcq">
+                  <div class="form__label-row">
+                    <label class="entry__label" style="font-weight:700; text-align:left; font-family:Helvetica, sans-serif; font-size:16px; color:#3c4858;" for="OPT_IN">CEI Certified</label>
+                    <div class="entry__choice">
+                      <label>
+                        <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN" />
+                        <span class="checkbox checkbox_tick_positive"></span>
+                        <span style="font-family:Helvetica, sans-serif; font-size:14px; color:#3C4858;">Yes</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="padding: 8px 0;">
+              <div class="sib-form-block" style="text-align: left">
+                <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-family:Helvetica, sans-serif; font-size:16px; font-weight:700; color:#FFFFFF; background-color:#1e293b; border-width:0px; border-radius:3px;" form="sib-form" type="submit">
+                  Submit Application
+                </button>
+              </div>
+            </div>
+            <input type="text" name="email_address_check" value="" class="input--hidden">
+            <input type="hidden" name="locale" value="en">
+          </form>
         </div>
-
-        <div>
-          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">CEI Certified</label>
-          <select name="cei" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors bg-white">
-            <option value="">Please select</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-
-        <button type="submit" class="w-full bg-brand-text text-white px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-brand-blue transition-colors duration-300">
-          Submit Application
-        </button>
-
-      </form>
+      </div>
     </div>
+
+    <script is:inline>
+      window.REQUIRED_CODE_ERROR_MESSAGE = 'Please choose a country code';
+      window.LOCALE = 'en';
+      window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+      window.REQUIRED_ERROR_MESSAGE = "This field cannot be left blank.";
+      window.GENERIC_INVALID_MESSAGE = "The information provided is invalid. Please review the field format and try again.";
+      window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected' } };
+      var AUTOHIDE = Boolean(0);
+    </script>
+    <script is:inline defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
   </div>
 </section>
