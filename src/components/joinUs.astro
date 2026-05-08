@@ -1,0 +1,61 @@
+---
+---
+<section class="py-32 bg-brand-snow">
+  <div class="max-w-3xl mx-auto px-6 md:px-12">
+    
+    <div class="text-center mb-16">
+      <span class="text-[0.65rem] uppercase tracking-widest text-brand-blue font-bold mb-4 block">Career Opportunities</span>
+      <h2 class="text-4xl md:text-5xl font-serif text-brand-text tracking-tight mb-6">Join Our Team</h2>
+      <p class="text-brand-text/80 font-normal leading-relaxed">
+        We are always looking for passionate individuals to join the Alexis Employment Agency family. Fill in your details below and we'll be in touch.
+      </p>
+    </div>
+
+    <div class="bg-white border border-brand-blue/10 p-10 shadow-premium rounded-md">
+      <form id="join-us-form" class="space-y-6">
+        
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Full Name</label>
+          <input type="text" name="name" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Phone Number</label>
+          <input type="tel" name="phone" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">Email</label>
+          <input type="email" name="email" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors" />
+        </div>
+
+        <div>
+          <label class="block text-xs uppercase tracking-widest font-bold text-brand-text/60 mb-2">CEI Certified</label>
+          <select name="cei" required class="w-full border border-brand-blue/20 px-4 py-3 text-brand-text focus:outline-none focus:border-brand-blue transition-colors bg-white">
+            <option value="">Please select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-text text-white px-6 py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-brand-blue transition-colors duration-300">
+          Submit Application
+        </button>
+
+        <div id="success-msg" class="hidden text-center text-green-600 font-medium">
+          Thank you! We will be in touch soon.
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script is:inline>
+  document.getElementById('join-us-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('success-msg').classList.remove('hidden');
+    this.reset();
+  });
+</script>
