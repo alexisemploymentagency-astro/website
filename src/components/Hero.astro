@@ -1,10 +1,8 @@
 ---
 // src/components/Hero.astro
 import { Image } from 'astro:assets';
-// Make sure this matches your exact image filename in the assets folder!
 import heroBg from '../assets/hero-family.jpg'; 
 ---
-
 <section class="relative pt-36 pb-24 md:pt-48 md:pb-32 overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
     
@@ -17,15 +15,14 @@ import heroBg from '../assets/hero-family.jpg';
       </div>
       
       <p class="text-lg md:text-xl text-brand-text/90 mb-12 leading-relaxed reveal delay-100 font-normal">
-        Licensed Singapore Employment Agency providing highly tailored matching with reliable, trained domestic helpers — safely and compliantly.
+        We are a MOM-licensed maid agency in Singapore helping families find trusted domestic helpers. We specialise in Indonesian maids, Myanmar maids, elderly care and childcare specialists — safely, transparently, and compliantly.
       </p>
-
       
-      <div class="flex flex-col sm:flex-row gap-6 mb-16 reveal delay-200">
-        <a href="#consultation" class="inline-flex items-center justify-center px-10 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.15em] hover:bg-brand-text transition-colors duration-500 shadow-premium">
+      <div class="flex flex-col sm:flex-row gap-4 mb-16 reveal delay-200">
+        <a href="#consultation" class="inline-flex items-center justify-center px-8 py-4 bg-brand-blue text-white font-bold text-xs uppercase tracking-[0.1em] hover:bg-brand-text transition-colors duration-500 shadow-premium whitespace-nowrap">
           Speak to a Placement Consultant
         </a>
-        <a href="/directory" class="inline-flex items-center justify-center px-10 py-4 border border-brand-text/30 text-brand-text font-bold text-xs uppercase tracking-[0.15em] hover:border-brand-text transition-colors duration-500 bg-transparent">
+        <a href="/directory" class="inline-flex items-center justify-center px-8 py-4 border border-brand-text/30 text-brand-text font-bold text-xs uppercase tracking-[0.1em] hover:border-brand-text transition-colors duration-500 bg-transparent whitespace-nowrap">
           Browse Helpers
         </a>
       </div>
@@ -52,13 +49,11 @@ import heroBg from '../assets/hero-family.jpg';
 
     <div class="relative w-full h-[550px] md:h-[650px] overflow-hidden reveal delay-200 shadow-premium">
       <div class="absolute inset-0 bg-brand-text/5 z-10 pointer-events-none"></div>
-      
       <Image 
         src={heroBg} 
         alt="Premium domestic helper service" 
         class="w-full h-full object-cover object-center transition-transform duration-[2000ms] hover:scale-105"
       />
     </div>
-
   </div>
 </section>
