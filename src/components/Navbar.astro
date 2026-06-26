@@ -20,7 +20,6 @@ const isPortal = currentPath.includes('/directory') || currentPath.includes('/pr
     </a>
 
     <nav class="hidden lg:flex items-center gap-10">
-      <a href="/directory" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">Browse Helpers</a>
       <a href="/#how-it-works" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">Process</a>
       <a href="/about" class="text-xs uppercase tracking-widest font-bold text-brand-text/80 hover:text-brand-blue transition-colors duration-300">About</a>
     </nav>
@@ -45,9 +44,9 @@ const isPortal = currentPath.includes('/directory') || currentPath.includes('/pr
       <a href="/#consultation" class="inline-flex items-center justify-center px-6 py-3 border border-brand-text/20 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-brand-text hover:bg-brand-text hover:text-white transition-all duration-500">
         Get Consultation
       </a>
-<a href="/joinus" class="inline-flex items-center justify-center px-6 py-3 bg-brand-blue text-white text-[0.65rem] font-bold uppercase tracking-[0.2em] hover:bg-brand-text transition-all duration-500">
-  Join Us
-</a>
+      <a href="/joinus" class="inline-flex items-center justify-center px-6 py-3 bg-brand-blue text-white text-[0.65rem] font-bold uppercase tracking-[0.2em] hover:bg-brand-text transition-all duration-500">
+        Join Us
+      </a>
 
       {isPortal && (
         <div class="flex items-center border-l border-brand-blue/20 pl-6 ml-2 h-8">
@@ -76,9 +75,9 @@ const isPortal = currentPath.includes('/directory') || currentPath.includes('/pr
 </header>
 
 <div id="mobile-menu" class="fixed inset-0 bg-brand-cream z-[60] hidden flex-col items-center justify-center gap-8 px-6 opacity-0 transition-opacity duration-300 pt-16">
-  <a href="/directory" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Browse Helpers</a>
   <a href="/#how-it-works" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">Process</a>
   <a href="/about" class="mobile-link text-lg uppercase tracking-widest font-bold text-brand-text hover:text-brand-blue transition-colors duration-300">About</a>
+  <a href="/joinus" class="mobile-link text-lg uppercase tracking-widest font-bold text-white bg-brand-blue px-10 py-4 hover:bg-brand-text transition-all duration-300 w-full max-w-xs text-center">Join Us</a>
   
   <div class="w-12 h-px bg-brand-blue/20 my-2"></div>
 
